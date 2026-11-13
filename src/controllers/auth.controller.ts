@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { TRegister } from "../utils/types";
 import { registerValidateSchema } from "../utils/validation";
 import response from "../utils/response";
+import UserModel from "../models/user.model";
 
 export default {
   async register(req: Request, res: Response) {
@@ -15,11 +16,15 @@ export default {
         password,
         confirmPassword,
       });
-      response.success(res, "Registration Success", {
+
+      const result = await UserModel.create({
         fullName,
         username,
         email,
+        password,
       });
+
+      response.success(res, "Registration Success", result);
     } catch (error) {
       const err = error as unknown as Error;
       response.badRequest(res, err.message);
