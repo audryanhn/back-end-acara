@@ -1,12 +1,15 @@
 import express from "express";
 import router from "./routes/routes";
+import bodyParser from "body-parser";
 
-const api = express();
+const app = express();
 
 const PORT = 3000;
 
-api.use("/api", router);
+app.use(bodyParser.json());
 
-api.listen(PORT, () => {
+app.use("/api", router);
+
+app.listen(PORT, () => {
   console.log(`server running on http://localhost:${PORT}`);
 });
