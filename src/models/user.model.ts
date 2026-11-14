@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { encrypt } from "../utils/encryption";
 import { User } from "../utils/interfaces";
 
 const Schema = mongoose.Schema;
@@ -43,6 +44,17 @@ const UserSchema = new Schema<User>(
     timestamps: true,
   },
 );
+
+UserSchema.pre("save", function () {
+  const user = this;
+  user.password = encrypt(user.password);
+});
+
+UserSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+};
 
 const UserModel = mongoose.model("User", UserSchema);
 
