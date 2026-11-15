@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import UserModel from "../models/user.model";
 import { encrypt } from "../utils/encryption";
+import { IReqUser } from "../utils/interfaces";
+import { generateToken } from "../utils/jwt";
 import response from "../utils/response";
 import { TRegister } from "../utils/types";
 import { registerValidateSchema } from "../utils/validation";
@@ -50,9 +52,32 @@ export default {
         return;
       }
 
-      response.success(res, "Login Successfull", userByIdentifier);
+      const token = generateToken({
+        id: userByIdentifier._id,
+        role: userByIdentifier.role,
+      });
+
+      response.success(res, "Login Successfull", token);
     } catch (error) {
       const err = error as unknown as Error;
+      response.badRequest(res, err.message);
+    }
+  },
+
+  async me(req: IReqUser, res: Response) {
+    const user = req.user;
+
+    try {
+      const result = await UserModel.findById(user?.id);
+
+      if (!result) {
+        response.notFound(res, "User Not Found");
+      }
+
+      response.success(res, "Get User Info - Success", result);
+    } catch (error) {
+      const err = error as unknown as Error;
+
       response.badRequest(res, err.message);
     }
   },

@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import { encrypt } from "../utils/encryption";
-import { User } from "../utils/interfaces";
+import { IUser } from "../utils/interfaces";
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema<User>(
+const UserSchema = new Schema<IUser>(
   {
     fullName: {
       type: Schema.Types.String,
