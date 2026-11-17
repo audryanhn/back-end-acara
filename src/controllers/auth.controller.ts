@@ -79,6 +79,7 @@ export default {
 
   async me(req: IReqUser, res: Response) {
     /**
+     #swagger.tags = ['Auth']
      #swagger.security = [{
      "bearerAuth" : []
      }]
