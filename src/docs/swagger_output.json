@@ -1,0 +1,256 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Acara API Documentation",
+    "description": "Acara API Documentation"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local-Server"
+    },
+    {
+      "url": "https://back-end-acara-ryn.vercel.app/api",
+      "description": "Deployment-Server"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "RegisterRequest": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "example": "kocheng oren"
+          },
+          "username": {
+            "type": "string",
+            "example": "kochengoren"
+          },
+          "email": {
+            "type": "string",
+            "example": "kochengoren@yopmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Kocheng123"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "example": "Kocheng123"
+          }
+        },
+        "xml": {
+          "name": "RegisterRequest"
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "example": "kochengoren"
+          },
+          "password": {
+            "type": "string",
+            "example": "Kocheng123"
+          }
+        },
+        "xml": {
+          "name": "LoginRequest"
+        }
+      },
+      "ActivationRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "abcdefghijklmnopqrstuvwxyz"
+          }
+        },
+        "xml": {
+          "name": "ActivationRequest"
+        }
+      },
+      "CreateCategory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "category 1"
+          },
+          "description": {
+            "type": "string",
+            "example": "category description 1"
+          },
+          "icon": {
+            "type": "string",
+            "example": "category.png"
+          }
+        },
+        "xml": {
+          "name": "CreateCategory"
+        }
+      },
+      "RemoveMedia": {
+        "type": "object",
+        "properties": {
+          "fileURL": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "xml": {
+          "name": "RemoveMedia"
+        }
+      },
+      "CreateEvent": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "acara 2 - coba coba"
+          },
+          "startDate": {
+            "type": "string",
+            "example": "2025-08-28 15:37:00"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "2003-02-16 15:37:00"
+          },
+          "description": {
+            "type": "string",
+            "example": "deskripsi acara 1 cobacoba"
+          },
+          "banner": {
+            "type": "string",
+            "example": "http://res.cloudinary.com/durftt5go/image/upload/v1746890865/kte27mkurpeqg6vkyq8x.jpg"
+          },
+          "isFeatured": {
+            "type": "boolean",
+            "example": true
+          },
+          "isOnline": {
+            "type": "boolean",
+            "example": true
+          },
+          "isPublish": {
+            "type": "string",
+            "example": "false"
+          },
+          "category": {
+            "type": "string",
+            "example": "681f716a31dcf382829608bc"
+          },
+          "CreatedBy": {
+            "type": "string",
+            "example": "681866eb63146c797fd57c83"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "region": {
+                "type": "number",
+                "example": 31
+              },
+              "coordinates": {
+                "type": "array",
+                "example": [
+                  -6.131353,
+                  106.841888
+                ],
+                "items": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "CreateEvent"
+        }
+      }
+    }
+  }
+}

@@ -9,6 +9,13 @@ import { registerValidateSchema } from "../utils/validation";
 
 export default {
   async register(req: Request, res: Response) {
+    /**
+     #swagger.tags=['Auth']
+     #swagger.requestBody = {
+     required : true,
+     schema : {$ref : "#/components/schemas/RegisterRequest"}}
+     */
+
     try {
       const { fullName, username, email, password, confirmPassword } =
         req.body as unknown as TRegister;
@@ -35,6 +42,12 @@ export default {
   },
 
   async login(req: Request, res: Response) {
+    /**
+     #swagger.tags=['Auth']
+     #swagger.requestBody = {
+     required : true,
+     schema : {$ref : "#/components/schemas/LoginRequest"}}
+     */
     const { identifier, password } = req.body;
 
     try {
@@ -65,6 +78,11 @@ export default {
   },
 
   async me(req: IReqUser, res: Response) {
+    /**
+     #swagger.security = [{
+     "bearerAuth" : []
+     }]
+     */
     const user = req.user;
 
     try {
