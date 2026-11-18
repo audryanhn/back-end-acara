@@ -28,3 +28,10 @@ export interface IUserToken extends Omit<
 export interface IReqUser extends Request {
   user?: IUserToken;
 }
+
+export interface ISendMail {
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+}
