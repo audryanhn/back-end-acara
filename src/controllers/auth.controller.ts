@@ -58,6 +58,11 @@ export default {
         response.badRequest(res, "User Not Found");
         return;
       }
+      if (!userByIdentifier.isActive) {
+        response.badRequest(res, "Please activate your account first");
+        return;
+      }
+
       const validatePassword = encrypt(password) === userByIdentifier.password;
 
       if (!validatePassword) {
@@ -94,6 +99,33 @@ export default {
       }
 
       response.success(res, "Get User Info - Success", result);
+    } catch (error) {
+      const err = error as unknown as Error;
+
+      response.badRequest(res, err.message);
+    }
+  },
+  async activation(req: Request, res: Response) {
+    /**
+     #swagger.tags = ['Auth']
+     #swagger.requestBody = {
+     required : true,
+     schema : {$ref : "#/components/schemas/ActivationRequest"}}
+     */
+    try {
+      const { code } = req.body as { code: string };
+      const result = await UserModel.findOneAndUpdate(
+        { activationCode: code },
+        { isActive: true },
+        { new: true },
+      );
+
+      if (!result) {
+        response.badRequest(res, "activation code invalid");
+        return;
+      }
+      response.success(res, "Account Activated", result);
+      return;
     } catch (error) {
       const err = error as unknown as Error;
 
