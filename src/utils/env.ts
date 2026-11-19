@@ -13,3 +13,4 @@ export const EMAIL_SMTP_PASS: string = process.env.EMAIL_SMTP_PASS || "";
 export const EMAIL_SMTP_PORT: number =
   Number(process.env.EMAIL_SMTP_PORT) || 465;
 export const EMAIL_SMTP_HOST: string = process.env.EMAIL_SMTP_HOST || "";
+export const CLIENT_HOST: string = process.env.CLIENT_HOST || "";

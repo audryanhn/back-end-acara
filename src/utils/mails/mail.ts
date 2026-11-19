@@ -12,28 +12,42 @@ import { ISendMail } from "../interfaces";
 import ejs from "ejs";
 import path from "path";
 
+// const transporter = nodemailer.createTransport({
+//   service: EMAIL_SMTP_SERVICE,
+//   host: EMAIL_SMTP_HOST,
+//   port: EMAIL_SMTP_PORT,
+//   secure: EMAIL_SMTP_SECURE,
+//   auth: {
+//     user: EMAIL_SMTP_USER,
+//     pass: EMAIL_SMTP_PASS,
+//   },
+//   requireTLS: true,
+// });
+
 const transporter = nodemailer.createTransport({
-  service: EMAIL_SMTP_SERVICE,
-  host: EMAIL_SMTP_HOST,
-  port: EMAIL_SMTP_PORT,
-  secure: EMAIL_SMTP_SECURE,
+  host: "smtp.zoho.com",
+  port: 465,
+  secure: true,
   auth: {
     user: EMAIL_SMTP_USER,
     pass: EMAIL_SMTP_PASS,
   },
-  requireTLS: true,
 });
 
-const sendMail = async ({ ...mailParams }: ISendMail) => {
+export const sendMail = async ({ ...mailParams }: ISendMail) => {
   const result = await transporter.sendMail({
-    ...sendMail,
+    ...mailParams,
   });
   return result;
 };
 
-const renderMailHTML = async (template: string, data: any) => {
+export const renderMailHTML = async (
+  template: string,
+  data: any,
+): Promise<string> => {
   const content = await ejs.renderFile(
     path.join(__dirname, `templates/${template}`),
+    data,
   );
-  return content;
+  return content as string;
 };

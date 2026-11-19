@@ -10,6 +10,7 @@ export interface IUser {
   isActive: boolean;
   profilePicture: string;
   activationCode: string;
+  createdAt: string;
 }
 
 export interface IUserToken extends Omit<
@@ -21,6 +22,7 @@ export interface IUserToken extends Omit<
   | "activationCode"
   | "profilePicture"
   | "isActive"
+  | "createdAt"
 > {
   id?: Types.ObjectId;
 }
